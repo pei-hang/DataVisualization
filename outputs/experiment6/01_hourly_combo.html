@@ -1,0 +1,1374 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>实验六：过去7天逐小时温度与降水双轴图</title>
+  <script type="text/javascript" src="https://assets.pyecharts.org/assets/v6/echarts.min.js"></script>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
+      background: linear-gradient(180deg, #eff5ff 0%, #ffffff 100%);
+      color: #1f2937;
+    }
+    .page {
+      max-width: 1460px;
+      margin: 0 auto;
+      padding: 24px 18px 36px;
+    }
+    .title {
+      margin: 0 0 10px;
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+    .subtitle {
+      margin: 0 0 20px;
+      color: #475569;
+      line-height: 1.7;
+      font-size: 15px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      gap: 18px;
+    }
+    .card {
+      grid-column: span 12;
+      background: rgba(255, 255, 255, 0.96);
+      border: 1px solid rgba(148, 163, 184, 0.18);
+      border-radius: 18px;
+      box-shadow: 0 18px 50px rgba(148, 163, 184, 0.16);
+      padding: 10px;
+    }
+    .card.half {
+      grid-column: span 6;
+    }
+    .chart-box {
+      width: 100%;
+    }
+    @media (max-width: 960px) {
+      .card.half {
+        grid-column: span 12;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <h1 class="title">实验六：过去7天逐小时温度与降水双轴图</h1>
+    <p class="subtitle">南昌过去7天逐小时 temperature_2m 与 precipitation 数据组合展示。折线表示温度趋势，柱状表示降水变化，时间轴精确到小时。</p>
+    <section class="grid">
+      <section class="card wide"><div id="hourly_combo_chart" class="chart-box" style="height:600px;"></div></section>
+    </section>
+  </main>
+  
+    <script>
+      var chart_hourly_combo_chart = echarts.init(
+        document.getElementById('hourly_combo_chart'),
+        "light",
+        { renderer: "canvas", locale: "ZH" }
+      );
+      var option_hourly_combo_chart = {
+    "animation": true,
+    "animationThreshold": 2000,
+    "animationDuration": 1000,
+    "animationEasing": "cubicOut",
+    "animationDelay": 0,
+    "animationDurationUpdate": 300,
+    "animationEasingUpdate": "cubicOut",
+    "animationDelayUpdate": 0,
+    "aria": {
+        "enabled": false
+    },
+    "series": [
+        {
+            "type": "bar",
+            "name": "\u6bcf\u5c0f\u65f6\u964d\u6c34\u91cf (mm)",
+            "yAxisIndex": 1,
+            "legendHoverLink": true,
+            "data": [
+                0.0,
+                0.5,
+                0.6,
+                0.6,
+                0.0,
+                1.7,
+                3.0,
+                5.3,
+                3.3,
+                1.7,
+                3.5,
+                2.4,
+                1.9,
+                0.6,
+                0.0,
+                0.5,
+                2.9,
+                1.3,
+                0.1,
+                0.1,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.1,
+                0.3,
+                0.3,
+                2.7,
+                1.3,
+                0.8,
+                0.7,
+                0.2,
+                0.0,
+                0.0,
+                0.1,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.1,
+                0.3,
+                0.0,
+                1.8,
+                0.8,
+                0.6,
+                1.2,
+                0.3,
+                0.8,
+                0.5,
+                1.3,
+                0.4,
+                0.8,
+                0.4,
+                0.1,
+                0.4,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.2,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.2,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.3,
+                0.4,
+                3.4,
+                3.3,
+                3.1,
+                3.8,
+                3.7,
+                4.4,
+                3.4
+            ],
+            "realtimeSort": false,
+            "showBackground": false,
+            "stackStrategy": "samesign",
+            "cursor": "pointer",
+            "barMinHeight": 0,
+            "barCategoryGap": "55%",
+            "barGap": "30%",
+            "large": false,
+            "largeThreshold": 400,
+            "seriesLayoutBy": "column",
+            "datasetIndex": 0,
+            "clip": true,
+            "zlevel": 0,
+            "z": 2,
+            "label": {
+                "show": false,
+                "margin": 8,
+                "richInheritPlainLabel": true,
+                "valueAnimation": false
+            }
+        },
+        {
+            "type": "line",
+            "name": "\u6bcf\u5c0f\u65f6\u6e29\u5ea6 (\u00b0C)",
+            "connectNulls": false,
+            "xAxisIndex": 0,
+            "symbol": "circle",
+            "symbolSize": 6,
+            "showSymbol": true,
+            "smooth": true,
+            "clip": true,
+            "step": false,
+            "stackStrategy": "samesign",
+            "data": [
+                [
+                    "04-03 00:00",
+                    15.8
+                ],
+                [
+                    "04-03 01:00",
+                    15.8
+                ],
+                [
+                    "04-03 02:00",
+                    15.7
+                ],
+                [
+                    "04-03 03:00",
+                    15.7
+                ],
+                [
+                    "04-03 04:00",
+                    15.6
+                ],
+                [
+                    "04-03 05:00",
+                    15.6
+                ],
+                [
+                    "04-03 06:00",
+                    15.6
+                ],
+                [
+                    "04-03 07:00",
+                    15.5
+                ],
+                [
+                    "04-03 08:00",
+                    15.7
+                ],
+                [
+                    "04-03 09:00",
+                    16.0
+                ],
+                [
+                    "04-03 10:00",
+                    16.2
+                ],
+                [
+                    "04-03 11:00",
+                    16.5
+                ],
+                [
+                    "04-03 12:00",
+                    16.9
+                ],
+                [
+                    "04-03 13:00",
+                    17.4
+                ],
+                [
+                    "04-03 14:00",
+                    17.4
+                ],
+                [
+                    "04-03 15:00",
+                    17.5
+                ],
+                [
+                    "04-03 16:00",
+                    17.2
+                ],
+                [
+                    "04-03 17:00",
+                    17.0
+                ],
+                [
+                    "04-03 18:00",
+                    17.0
+                ],
+                [
+                    "04-03 19:00",
+                    17.0
+                ],
+                [
+                    "04-03 20:00",
+                    16.9
+                ],
+                [
+                    "04-03 21:00",
+                    16.4
+                ],
+                [
+                    "04-03 22:00",
+                    15.6
+                ],
+                [
+                    "04-03 23:00",
+                    14.8
+                ],
+                [
+                    "04-04 00:00",
+                    14.4
+                ],
+                [
+                    "04-04 01:00",
+                    14.0
+                ],
+                [
+                    "04-04 02:00",
+                    13.5
+                ],
+                [
+                    "04-04 03:00",
+                    13.1
+                ],
+                [
+                    "04-04 04:00",
+                    12.6
+                ],
+                [
+                    "04-04 05:00",
+                    12.5
+                ],
+                [
+                    "04-04 06:00",
+                    12.2
+                ],
+                [
+                    "04-04 07:00",
+                    12.1
+                ],
+                [
+                    "04-04 08:00",
+                    13.8
+                ],
+                [
+                    "04-04 09:00",
+                    16.2
+                ],
+                [
+                    "04-04 10:00",
+                    17.9
+                ],
+                [
+                    "04-04 11:00",
+                    19.4
+                ],
+                [
+                    "04-04 12:00",
+                    20.5
+                ],
+                [
+                    "04-04 13:00",
+                    21.2
+                ],
+                [
+                    "04-04 14:00",
+                    22.0
+                ],
+                [
+                    "04-04 15:00",
+                    22.4
+                ],
+                [
+                    "04-04 16:00",
+                    22.4
+                ],
+                [
+                    "04-04 17:00",
+                    22.0
+                ],
+                [
+                    "04-04 18:00",
+                    21.3
+                ],
+                [
+                    "04-04 19:00",
+                    19.9
+                ],
+                [
+                    "04-04 20:00",
+                    19.3
+                ],
+                [
+                    "04-04 21:00",
+                    18.8
+                ],
+                [
+                    "04-04 22:00",
+                    18.4
+                ],
+                [
+                    "04-04 23:00",
+                    18.1
+                ],
+                [
+                    "04-05 00:00",
+                    18.0
+                ],
+                [
+                    "04-05 01:00",
+                    17.7
+                ],
+                [
+                    "04-05 02:00",
+                    16.6
+                ],
+                [
+                    "04-05 03:00",
+                    16.1
+                ],
+                [
+                    "04-05 04:00",
+                    15.3
+                ],
+                [
+                    "04-05 05:00",
+                    15.0
+                ],
+                [
+                    "04-05 06:00",
+                    15.4
+                ],
+                [
+                    "04-05 07:00",
+                    15.6
+                ],
+                [
+                    "04-05 08:00",
+                    16.6
+                ],
+                [
+                    "04-05 09:00",
+                    18.8
+                ],
+                [
+                    "04-05 10:00",
+                    20.5
+                ],
+                [
+                    "04-05 11:00",
+                    22.0
+                ],
+                [
+                    "04-05 12:00",
+                    22.8
+                ],
+                [
+                    "04-05 13:00",
+                    23.4
+                ],
+                [
+                    "04-05 14:00",
+                    25.1
+                ],
+                [
+                    "04-05 15:00",
+                    25.1
+                ],
+                [
+                    "04-05 16:00",
+                    25.0
+                ],
+                [
+                    "04-05 17:00",
+                    24.6
+                ],
+                [
+                    "04-05 18:00",
+                    23.9
+                ],
+                [
+                    "04-05 19:00",
+                    22.6
+                ],
+                [
+                    "04-05 20:00",
+                    22.2
+                ],
+                [
+                    "04-05 21:00",
+                    21.4
+                ],
+                [
+                    "04-05 22:00",
+                    21.0
+                ],
+                [
+                    "04-05 23:00",
+                    21.0
+                ],
+                [
+                    "04-06 00:00",
+                    20.5
+                ],
+                [
+                    "04-06 01:00",
+                    20.5
+                ],
+                [
+                    "04-06 02:00",
+                    20.0
+                ],
+                [
+                    "04-06 03:00",
+                    19.8
+                ],
+                [
+                    "04-06 04:00",
+                    19.6
+                ],
+                [
+                    "04-06 05:00",
+                    19.6
+                ],
+                [
+                    "04-06 06:00",
+                    19.5
+                ],
+                [
+                    "04-06 07:00",
+                    19.5
+                ],
+                [
+                    "04-06 08:00",
+                    19.2
+                ],
+                [
+                    "04-06 09:00",
+                    19.7
+                ],
+                [
+                    "04-06 10:00",
+                    20.2
+                ],
+                [
+                    "04-06 11:00",
+                    21.1
+                ],
+                [
+                    "04-06 12:00",
+                    21.6
+                ],
+                [
+                    "04-06 13:00",
+                    21.7
+                ],
+                [
+                    "04-06 14:00",
+                    22.0
+                ],
+                [
+                    "04-06 15:00",
+                    21.9
+                ],
+                [
+                    "04-06 16:00",
+                    21.0
+                ],
+                [
+                    "04-06 17:00",
+                    20.7
+                ],
+                [
+                    "04-06 18:00",
+                    20.4
+                ],
+                [
+                    "04-06 19:00",
+                    20.2
+                ],
+                [
+                    "04-06 20:00",
+                    20.6
+                ],
+                [
+                    "04-06 21:00",
+                    19.5
+                ],
+                [
+                    "04-06 22:00",
+                    19.5
+                ],
+                [
+                    "04-06 23:00",
+                    19.4
+                ],
+                [
+                    "04-07 00:00",
+                    19.6
+                ],
+                [
+                    "04-07 01:00",
+                    19.4
+                ],
+                [
+                    "04-07 02:00",
+                    19.6
+                ],
+                [
+                    "04-07 03:00",
+                    19.6
+                ],
+                [
+                    "04-07 04:00",
+                    19.5
+                ],
+                [
+                    "04-07 05:00",
+                    19.5
+                ],
+                [
+                    "04-07 06:00",
+                    19.1
+                ],
+                [
+                    "04-07 07:00",
+                    19.0
+                ],
+                [
+                    "04-07 08:00",
+                    19.6
+                ],
+                [
+                    "04-07 09:00",
+                    20.6
+                ],
+                [
+                    "04-07 10:00",
+                    21.4
+                ],
+                [
+                    "04-07 11:00",
+                    22.5
+                ],
+                [
+                    "04-07 12:00",
+                    23.3
+                ],
+                [
+                    "04-07 13:00",
+                    23.5
+                ],
+                [
+                    "04-07 14:00",
+                    23.9
+                ],
+                [
+                    "04-07 15:00",
+                    23.4
+                ],
+                [
+                    "04-07 16:00",
+                    23.4
+                ],
+                [
+                    "04-07 17:00",
+                    22.9
+                ],
+                [
+                    "04-07 18:00",
+                    22.7
+                ],
+                [
+                    "04-07 19:00",
+                    22.3
+                ],
+                [
+                    "04-07 20:00",
+                    21.6
+                ],
+                [
+                    "04-07 21:00",
+                    21.3
+                ],
+                [
+                    "04-07 22:00",
+                    20.9
+                ],
+                [
+                    "04-07 23:00",
+                    20.5
+                ],
+                [
+                    "04-08 00:00",
+                    20.1
+                ],
+                [
+                    "04-08 01:00",
+                    19.7
+                ],
+                [
+                    "04-08 02:00",
+                    19.0
+                ],
+                [
+                    "04-08 03:00",
+                    18.7
+                ],
+                [
+                    "04-08 04:00",
+                    18.4
+                ],
+                [
+                    "04-08 05:00",
+                    17.9
+                ],
+                [
+                    "04-08 06:00",
+                    17.7
+                ],
+                [
+                    "04-08 07:00",
+                    17.6
+                ],
+                [
+                    "04-08 08:00",
+                    17.2
+                ],
+                [
+                    "04-08 09:00",
+                    17.4
+                ],
+                [
+                    "04-08 10:00",
+                    17.5
+                ],
+                [
+                    "04-08 11:00",
+                    18.1
+                ],
+                [
+                    "04-08 12:00",
+                    19.1
+                ],
+                [
+                    "04-08 13:00",
+                    20.3
+                ],
+                [
+                    "04-08 14:00",
+                    21.2
+                ],
+                [
+                    "04-08 15:00",
+                    22.5
+                ],
+                [
+                    "04-08 16:00",
+                    22.9
+                ],
+                [
+                    "04-08 17:00",
+                    23.1
+                ],
+                [
+                    "04-08 18:00",
+                    23.0
+                ],
+                [
+                    "04-08 19:00",
+                    22.5
+                ],
+                [
+                    "04-08 20:00",
+                    22.6
+                ],
+                [
+                    "04-08 21:00",
+                    22.5
+                ],
+                [
+                    "04-08 22:00",
+                    22.4
+                ],
+                [
+                    "04-08 23:00",
+                    22.4
+                ],
+                [
+                    "04-09 00:00",
+                    22.6
+                ],
+                [
+                    "04-09 01:00",
+                    22.4
+                ],
+                [
+                    "04-09 02:00",
+                    21.7
+                ],
+                [
+                    "04-09 03:00",
+                    21.8
+                ],
+                [
+                    "04-09 04:00",
+                    21.8
+                ],
+                [
+                    "04-09 05:00",
+                    21.7
+                ],
+                [
+                    "04-09 06:00",
+                    21.6
+                ],
+                [
+                    "04-09 07:00",
+                    22.2
+                ],
+                [
+                    "04-09 08:00",
+                    23.4
+                ],
+                [
+                    "04-09 09:00",
+                    25.1
+                ],
+                [
+                    "04-09 10:00",
+                    26.9
+                ],
+                [
+                    "04-09 11:00",
+                    28.6
+                ],
+                [
+                    "04-09 12:00",
+                    30.0
+                ],
+                [
+                    "04-09 13:00",
+                    31.1
+                ],
+                [
+                    "04-09 14:00",
+                    31.5
+                ],
+                [
+                    "04-09 15:00",
+                    30.2
+                ],
+                [
+                    "04-09 16:00",
+                    28.3
+                ],
+                [
+                    "04-09 17:00",
+                    26.6
+                ],
+                [
+                    "04-09 18:00",
+                    25.9
+                ],
+                [
+                    "04-09 19:00",
+                    25.7
+                ],
+                [
+                    "04-09 20:00",
+                    25.6
+                ],
+                [
+                    "04-09 21:00",
+                    25.1
+                ],
+                [
+                    "04-09 22:00",
+                    24.7
+                ],
+                [
+                    "04-09 23:00",
+                    24.1
+                ]
+            ],
+            "hoverAnimation": true,
+            "label": {
+                "show": false,
+                "margin": 8,
+                "richInheritPlainLabel": true,
+                "valueAnimation": false
+            },
+            "logBase": 10,
+            "seriesLayoutBy": "column",
+            "lineStyle": {
+                "show": false,
+                "width": 3
+            },
+            "areaStyle": {
+                "opacity": 0
+            },
+            "zlevel": 0,
+            "z": 0
+        }
+    ],
+    "legend": [
+        {
+            "data": [
+                "\u6bcf\u5c0f\u65f6\u964d\u6c34\u91cf (mm)",
+                "\u6bcf\u5c0f\u65f6\u6e29\u5ea6 (\u00b0C)"
+            ],
+            "selected": {},
+            "show": true,
+            "top": "7%",
+            "padding": 5,
+            "itemGap": 10,
+            "itemWidth": 25,
+            "itemHeight": 14,
+            "backgroundColor": "transparent",
+            "borderColor": "#ccc",
+            "borderRadius": 0,
+            "pageButtonItemGap": 5,
+            "pageButtonPosition": "end",
+            "pageFormatter": "{current}/{total}",
+            "pageIconColor": "#2f4554",
+            "pageIconInactiveColor": "#aaa",
+            "pageIconSize": 15,
+            "animationDurationUpdate": 800,
+            "selector": false,
+            "selectorPosition": "auto",
+            "selectorItemGap": 7,
+            "selectorButtonGap": 10,
+            "triggerEvent": false
+        }
+    ],
+    "tooltip": {
+        "show": true,
+        "trigger": "axis",
+        "triggerOn": "mousemove|click",
+        "axisPointer": {
+            "type": "cross"
+        },
+        "showContent": true,
+        "alwaysShowContent": false,
+        "showDelay": 0,
+        "hideDelay": 100,
+        "enterable": false,
+        "confine": false,
+        "appendToBody": false,
+        "transitionDuration": 0.4,
+        "displayTransition": true,
+        "textStyle": {
+            "fontSize": 14,
+            "richInheritPlainLabel": true
+        },
+        "borderWidth": 0,
+        "padding": 5,
+        "order": "seriesAsc"
+    },
+    "xAxis": [
+        {
+            "name": "\u65f6\u95f4",
+            "show": true,
+            "scale": false,
+            "nameLocation": "end",
+            "nameGap": 15,
+            "nameTruncate": {},
+            "nameMoveOverlap": true,
+            "axisLabel": {
+                "show": true,
+                "rotate": 38,
+                "margin": 8,
+                "interval": 7,
+                "richInheritPlainLabel": true,
+                "valueAnimation": false
+            },
+            "inverse": false,
+            "offset": 0,
+            "splitNumber": 5,
+            "minInterval": 0,
+            "silent": false,
+            "triggerEvent": false,
+            "splitLine": {
+                "show": true,
+                "lineStyle": {
+                    "show": false
+                }
+            },
+            "animation": true,
+            "animationThreshold": 2000,
+            "animationDuration": 1000,
+            "animationEasing": "cubicOut",
+            "animationDelay": 0,
+            "animationDurationUpdate": 300,
+            "animationEasingUpdate": "cubicOut",
+            "animationDelayUpdate": 0,
+            "data": [
+                "04-03 00:00",
+                "04-03 01:00",
+                "04-03 02:00",
+                "04-03 03:00",
+                "04-03 04:00",
+                "04-03 05:00",
+                "04-03 06:00",
+                "04-03 07:00",
+                "04-03 08:00",
+                "04-03 09:00",
+                "04-03 10:00",
+                "04-03 11:00",
+                "04-03 12:00",
+                "04-03 13:00",
+                "04-03 14:00",
+                "04-03 15:00",
+                "04-03 16:00",
+                "04-03 17:00",
+                "04-03 18:00",
+                "04-03 19:00",
+                "04-03 20:00",
+                "04-03 21:00",
+                "04-03 22:00",
+                "04-03 23:00",
+                "04-04 00:00",
+                "04-04 01:00",
+                "04-04 02:00",
+                "04-04 03:00",
+                "04-04 04:00",
+                "04-04 05:00",
+                "04-04 06:00",
+                "04-04 07:00",
+                "04-04 08:00",
+                "04-04 09:00",
+                "04-04 10:00",
+                "04-04 11:00",
+                "04-04 12:00",
+                "04-04 13:00",
+                "04-04 14:00",
+                "04-04 15:00",
+                "04-04 16:00",
+                "04-04 17:00",
+                "04-04 18:00",
+                "04-04 19:00",
+                "04-04 20:00",
+                "04-04 21:00",
+                "04-04 22:00",
+                "04-04 23:00",
+                "04-05 00:00",
+                "04-05 01:00",
+                "04-05 02:00",
+                "04-05 03:00",
+                "04-05 04:00",
+                "04-05 05:00",
+                "04-05 06:00",
+                "04-05 07:00",
+                "04-05 08:00",
+                "04-05 09:00",
+                "04-05 10:00",
+                "04-05 11:00",
+                "04-05 12:00",
+                "04-05 13:00",
+                "04-05 14:00",
+                "04-05 15:00",
+                "04-05 16:00",
+                "04-05 17:00",
+                "04-05 18:00",
+                "04-05 19:00",
+                "04-05 20:00",
+                "04-05 21:00",
+                "04-05 22:00",
+                "04-05 23:00",
+                "04-06 00:00",
+                "04-06 01:00",
+                "04-06 02:00",
+                "04-06 03:00",
+                "04-06 04:00",
+                "04-06 05:00",
+                "04-06 06:00",
+                "04-06 07:00",
+                "04-06 08:00",
+                "04-06 09:00",
+                "04-06 10:00",
+                "04-06 11:00",
+                "04-06 12:00",
+                "04-06 13:00",
+                "04-06 14:00",
+                "04-06 15:00",
+                "04-06 16:00",
+                "04-06 17:00",
+                "04-06 18:00",
+                "04-06 19:00",
+                "04-06 20:00",
+                "04-06 21:00",
+                "04-06 22:00",
+                "04-06 23:00",
+                "04-07 00:00",
+                "04-07 01:00",
+                "04-07 02:00",
+                "04-07 03:00",
+                "04-07 04:00",
+                "04-07 05:00",
+                "04-07 06:00",
+                "04-07 07:00",
+                "04-07 08:00",
+                "04-07 09:00",
+                "04-07 10:00",
+                "04-07 11:00",
+                "04-07 12:00",
+                "04-07 13:00",
+                "04-07 14:00",
+                "04-07 15:00",
+                "04-07 16:00",
+                "04-07 17:00",
+                "04-07 18:00",
+                "04-07 19:00",
+                "04-07 20:00",
+                "04-07 21:00",
+                "04-07 22:00",
+                "04-07 23:00",
+                "04-08 00:00",
+                "04-08 01:00",
+                "04-08 02:00",
+                "04-08 03:00",
+                "04-08 04:00",
+                "04-08 05:00",
+                "04-08 06:00",
+                "04-08 07:00",
+                "04-08 08:00",
+                "04-08 09:00",
+                "04-08 10:00",
+                "04-08 11:00",
+                "04-08 12:00",
+                "04-08 13:00",
+                "04-08 14:00",
+                "04-08 15:00",
+                "04-08 16:00",
+                "04-08 17:00",
+                "04-08 18:00",
+                "04-08 19:00",
+                "04-08 20:00",
+                "04-08 21:00",
+                "04-08 22:00",
+                "04-08 23:00",
+                "04-09 00:00",
+                "04-09 01:00",
+                "04-09 02:00",
+                "04-09 03:00",
+                "04-09 04:00",
+                "04-09 05:00",
+                "04-09 06:00",
+                "04-09 07:00",
+                "04-09 08:00",
+                "04-09 09:00",
+                "04-09 10:00",
+                "04-09 11:00",
+                "04-09 12:00",
+                "04-09 13:00",
+                "04-09 14:00",
+                "04-09 15:00",
+                "04-09 16:00",
+                "04-09 17:00",
+                "04-09 18:00",
+                "04-09 19:00",
+                "04-09 20:00",
+                "04-09 21:00",
+                "04-09 22:00",
+                "04-09 23:00"
+            ]
+        }
+    ],
+    "yAxis": [
+        {
+            "name": "\u6e29\u5ea6 (\u00b0C)",
+            "show": true,
+            "scale": false,
+            "nameLocation": "end",
+            "nameGap": 15,
+            "nameTruncate": {},
+            "nameMoveOverlap": true,
+            "inverse": false,
+            "offset": 0,
+            "splitNumber": 5,
+            "minInterval": 0,
+            "silent": false,
+            "triggerEvent": false,
+            "splitLine": {
+                "show": true,
+                "lineStyle": {
+                    "show": false
+                }
+            },
+            "animation": true,
+            "animationThreshold": 2000,
+            "animationDuration": 1000,
+            "animationEasing": "cubicOut",
+            "animationDelay": 0,
+            "animationDurationUpdate": 300,
+            "animationEasingUpdate": "cubicOut",
+            "animationDelayUpdate": 0
+        },
+        {
+            "name": "\u964d\u6c34\u91cf (mm)",
+            "show": true,
+            "scale": false,
+            "nameLocation": "end",
+            "nameGap": 15,
+            "nameTruncate": {},
+            "nameMoveOverlap": true,
+            "inverse": false,
+            "position": "right",
+            "offset": 0,
+            "splitNumber": 5,
+            "min": 0,
+            "minInterval": 0,
+            "silent": false,
+            "triggerEvent": false,
+            "splitLine": {
+                "show": false,
+                "lineStyle": {
+                    "show": false
+                }
+            },
+            "animation": true,
+            "animationThreshold": 2000,
+            "animationDuration": 1000,
+            "animationEasing": "cubicOut",
+            "animationDelay": 0,
+            "animationDurationUpdate": 300,
+            "animationEasingUpdate": "cubicOut",
+            "animationDelayUpdate": 0
+        }
+    ],
+    "color": [
+        "#4ea8de",
+        "#e76f51"
+    ],
+    "title": [
+        {
+            "show": true,
+            "text": "\u5357\u660c\u8fc7\u53bb7\u5929\u9010\u5c0f\u65f6\u6e29\u5ea6\u4e0e\u964d\u6c34\u53d8\u5316",
+            "target": "blank",
+            "subtarget": "blank",
+            "padding": 5,
+            "itemGap": 10,
+            "textAlign": "auto",
+            "textVerticalAlign": "auto",
+            "triggerEvent": false
+        }
+    ],
+    "dataZoom": [
+        {
+            "show": true,
+            "type": "inside",
+            "showDetail": true,
+            "showDataShadow": true,
+            "realtime": true,
+            "start": 0,
+            "end": 45,
+            "orient": "horizontal",
+            "zoomLock": false,
+            "filterMode": "filter",
+            "disabled": false,
+            "zoomOnMouseWheel": true,
+            "moveOnMouseMove": true,
+            "moveOnMouseWheel": true,
+            "preventDefaultMouseMove": true
+        },
+        {
+            "show": true,
+            "type": "slider",
+            "showDetail": true,
+            "showDataShadow": true,
+            "realtime": true,
+            "start": 0,
+            "end": 45,
+            "orient": "horizontal",
+            "zoomLock": false,
+            "bottom": "0%",
+            "filterMode": "filter"
+        }
+    ]
+};
+      chart_hourly_combo_chart.setOption(option_hourly_combo_chart);
+      window.addEventListener('resize', function () {
+        chart_hourly_combo_chart.resize();
+      });
+    </script>
+    
+  
+</body>
+</html>
