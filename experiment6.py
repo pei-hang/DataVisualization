@@ -301,7 +301,7 @@ def build_hourly_combo_chart(df: pd.DataFrame) -> ChartBundle:
             )
         )
         .set_global_opts(
-            title_opts=opts.TitleOpts(title="南昌过去7天逐小时温度与降水变化"),
+            title_opts=opts.TitleOpts(title="南昌过去7天逐小时温度与降水变化-裴航"),
             tooltip_opts=opts.TooltipOpts(trigger="axis", axis_pointer_type="cross"),
             legend_opts=opts.LegendOpts(pos_top="7%"),
             xaxis_opts=opts.AxisOpts(
@@ -390,7 +390,7 @@ def build_august_analysis_charts(
 
     radar.set_global_opts(
         title_opts=opts.TitleOpts(
-            title="五城市 2025 年 8 月综合气象特征雷达图",
+            title="五城市 2025 年 8 月综合气象特征雷达图-裴航",
             pos_left="center",
         ),
         legend_opts=opts.LegendOpts(
@@ -570,7 +570,7 @@ def build_geo_chart(realtime_data: dict[str, dict[str, float]]) -> ChartBundle:
 
     geo.set_global_opts(
         title_opts=opts.TitleOpts(
-            title="五城市实时天气地理分布",
+            title="五城市实时天气地理分布-裴航",
             subtitle="点大小表示风速，颜色深浅表示当前温度",
         ),
         legend_opts=opts.LegendOpts(is_show=False),
@@ -616,7 +616,7 @@ def build_timeline_chart(forecast_frames: dict[str, pd.DataFrame]) -> ChartBundl
             )
             .set_global_opts(
                 title_opts=opts.TitleOpts(
-                    title=f"{city.name}未来24小时逐小时温度预测",
+                    title=f"{city.name}未来24小时逐小时温度预测-裴航",
                     pos_top="3%",
                     pos_left="center",   # 标题居中
                 ),
