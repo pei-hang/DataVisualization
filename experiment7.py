@@ -285,8 +285,9 @@ def plot_temperature_line(frame: pd.DataFrame) -> Path:
         labels={"time_label": "时间", "temperature_2m": "温度（℃）"},
         title="24小时温度变化（南昌）",
     )
-    fig.update_xaxes(showgrid=True, title="时间")
-    fig.update_yaxes(showgrid=True, title="温度（℃）")
+    fig.update_layout(plot_bgcolor="white")
+    fig.update_xaxes(showgrid=True, title="时间", gridcolor="#e0e0e0", linecolor="#cccccc")
+    fig.update_yaxes(showgrid=True, title="温度（℃）", gridcolor="#e0e0e0", linecolor="#cccccc")
     fig.update_traces(line={"width": 3, "color": "#e76f51"}, marker={"size": 7})
     return save_plotly_html(fig, "01_temperature_line.html", "24小时温度变化（南昌）")
 
@@ -305,8 +306,9 @@ def plot_temperature_humidity_scatter(frame: pd.DataFrame) -> Path:
         },
         title="南昌未来24小时温度与湿度关系",
     )
-    fig.update_xaxes(showgrid=True)
-    fig.update_yaxes(showgrid=True)
+    fig.update_layout(plot_bgcolor="white")
+    fig.update_xaxes(showgrid=True,gridcolor="#e0e0e0", linecolor="#cccccc")
+    fig.update_yaxes(showgrid=True,gridcolor="#e0e0e0", linecolor="#cccccc")
     fig.update_traces(marker=dict(size=12))  # 这里改大小
     return save_plotly_html(fig, "02_temperature_humidity_scatter.html", "南昌未来24小时温湿度散点图")
 
@@ -325,6 +327,7 @@ def build_city_temperature_bar(frame: pd.DataFrame) -> go.Figure:
         go.Bar(
             x=summary["city"],
             y=summary["max_temp"].round(2),
+            width=0.4,  # 👈 控制柱子粗细，越小越细
             error_y={"type": "data", "array": summary["temp_range"].round(2), "visible": True},
             marker_color=["#e76f51", "#457b9d", "#2a9d8f"],
             text=summary["max_temp"].round(1).astype(str) + "℃",
@@ -335,7 +338,7 @@ def build_city_temperature_bar(frame: pd.DataFrame) -> go.Figure:
             ),
         )
     )
-    fig.update_layout(title="三城市最近24小时最高温度对比（误差线=昼夜温差）")
+    fig.update_layout(title="三城市最近24小时最高温度对比（误差线=昼夜温差）", height=700)
     fig.update_xaxes(title="城市")
     fig.update_yaxes(title="最高温度（℃）", showgrid=True)
     return fig
@@ -546,7 +549,6 @@ def plot_temperature_animation(frame: pd.DataFrame) -> Path:
     )
     return save_plotly_html(fig, "05_national_temperature_animation.html", "全国未来24小时温度场变化动画")
 
-
 def write_linked_view(frame: pd.DataFrame) -> Path:
     current = frame.sort_values("time").groupby("city", as_index=False).first()
     city_order = current["city"].tolist()
@@ -577,7 +579,11 @@ def write_linked_view(frame: pd.DataFrame) -> Path:
             hovertemplate="%{customdata}<br>温度=%{marker.color:.1f}℃<extra></extra>",
         )
     )
-    map_fig.update_layout(title="点击左侧城市点，右侧同步显示温度曲线")
+    map_fig.update_layout(
+        title="点击城市查看对应温度曲线",
+        # 👇 缩边距，让地图撑满
+        margin=dict(l=10, r=10, t=50, b=10)
+    )
     map_fig.update_geos(
         projection_type="mercator",
         lataxis_range=[15, 55],
@@ -598,7 +604,11 @@ def write_linked_view(frame: pd.DataFrame) -> Path:
             name=first_city,
         )
     )
-    line_fig.update_layout(title=f"{first_city}未来24小时温度曲线")
+    line_fig.update_layout(
+        title=f"{first_city}未来24小时温度曲线",
+        # 👇 缩边距，让曲线撑满
+        margin=dict(l=40, r=20, t=60, b=50)
+    )
     line_fig.update_xaxes(title="时间", showgrid=True)
     line_fig.update_yaxes(title="温度（℃）", showgrid=True)
 
@@ -612,9 +622,12 @@ def write_linked_view(frame: pd.DataFrame) -> Path:
     body {{ margin: 0; font-family: "PingFang SC", "Microsoft YaHei", sans-serif; background: #f5f8ff; color: #1f2937; }}
     main {{ max-width: 1480px; margin: 0 auto; padding: 22px 18px 34px; }}
     h1 {{ margin: 0 0 14px; }}
-    .layout {{ display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }}
-    .card {{ background: white; border-radius: 18px; box-shadow: 0 18px 50px rgba(148, 163, 184, 0.18); padding: 10px; }}
-    @media (max-width: 980px) {{ .layout {{ grid-template-columns: 1fr; }} }}
+    .layout {{ display: grid; grid-template-columns: 1fr; gap: 20px; }}
+    /* 👇 减小卡片内边距，让图更大 */
+    .card {{ background: white; border-radius: 18px; box-shadow: 0 18px 50px rgba(148, 163, 184, 0.18); padding: 4px; }}
+    /* 👇 给地图固定高度，更大气 */
+    #linked-map {{ height: 420px; }}
+    #linked-line {{ height: 380px; }}
   </style>
 </head>
 <body>
@@ -647,7 +660,7 @@ def write_linked_view(frame: pd.DataFrame) -> Path:
         title: city + '未来24小时温度曲线',
         xaxis: {{title: '时间', showgrid: true}},
         yaxis: {{title: '温度（℃）', showgrid: true}},
-        margin: {{l: 55, r: 30, t: 70, b: 60}},
+        margin: {{l: 40, r: 20, t: 60, b: 50}},
         font: {{family: 'PingFang SC, Microsoft YaHei, sans-serif'}}
       }};
       Plotly.react('linked-line', data, layout, {{responsive: true}});
