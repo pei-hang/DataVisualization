@@ -283,13 +283,13 @@ def plot_temperature_line(frame: pd.DataFrame) -> Path:
         y="temperature_2m",
         markers=True,
         labels={"time_label": "时间", "temperature_2m": "温度（℃）"},
-        title="24小时温度变化（南昌）",
+        title="24小时温度变化（南昌）-裴航",
     )
     fig.update_layout(plot_bgcolor="white")
     fig.update_xaxes(showgrid=True, title="时间", gridcolor="#e0e0e0", linecolor="#cccccc")
     fig.update_yaxes(showgrid=True, title="温度（℃）", gridcolor="#e0e0e0", linecolor="#cccccc")
     fig.update_traces(line={"width": 3, "color": "#e76f51"}, marker={"size": 7})
-    return save_plotly_html(fig, "01_temperature_line.html", "24小时温度变化（南昌）")
+    return save_plotly_html(fig, "01_temperature_line.html", "24小时温度变化（南昌）-裴航")
 
 
 def plot_temperature_humidity_scatter(frame: pd.DataFrame) -> Path:
@@ -304,13 +304,13 @@ def plot_temperature_humidity_scatter(frame: pd.DataFrame) -> Path:
             "temperature_2m": "温度（℃）",
             "relative_humidity_2m": "相对湿度（%）",
         },
-        title="南昌未来24小时温度与湿度关系",
+        title="南昌未来24小时温度与湿度关系-裴航",
     )
     fig.update_layout(plot_bgcolor="white")
     fig.update_xaxes(showgrid=True,gridcolor="#e0e0e0", linecolor="#cccccc")
     fig.update_yaxes(showgrid=True,gridcolor="#e0e0e0", linecolor="#cccccc")
     fig.update_traces(marker=dict(size=12))  # 这里改大小
-    return save_plotly_html(fig, "02_temperature_humidity_scatter.html", "南昌未来24小时温湿度散点图")
+    return save_plotly_html(fig, "02_temperature_humidity_scatter.html", "南昌未来24小时温湿度散点图-裴航")
 
 
 def build_city_temperature_bar(frame: pd.DataFrame) -> go.Figure:
@@ -338,7 +338,7 @@ def build_city_temperature_bar(frame: pd.DataFrame) -> go.Figure:
             ),
         )
     )
-    fig.update_layout(title="三城市最近24小时最高温度对比（误差线=昼夜温差）", height=700)
+    fig.update_layout(title="三城市最近24小时最高温度对比（误差线=昼夜温差）-裴航", height=700)
     fig.update_xaxes(title="城市")
     fig.update_yaxes(title="最高温度（℃）", showgrid=True)
     return fig
@@ -373,7 +373,7 @@ def build_wind_rose(frame: pd.DataFrame) -> go.Figure:
             )
         )
     fig.update_layout(
-        title="三城市最近24小时风速玫瑰图",
+        title="三城市最近24小时风速玫瑰图-裴航",
         polar={"radialaxis": {"title": "平均风速 (m/s)", "showgrid": True}},
         updatemenus=[
             {
@@ -437,7 +437,7 @@ def build_city_dropdown_chart(frame: pd.DataFrame) -> go.Figure:
             }
         )
     fig.update_layout(
-        title=f"{cities[0]}最近24小时气象指标",
+        title=f"{cities[0]}最近24小时气象指标-裴航",
         updatemenus=[{"buttons": buttons, "direction": "down", "x": 0.02, "y": 1.18}],
     )
     fig.update_xaxes(title="时间", showgrid=True)
@@ -509,7 +509,7 @@ def plot_current_national_map(frame: pd.DataFrame) -> Path:
         hover_name="city",
         hover_data={"temperature_2m": ":.1f", "weathercode": True, "bubble_size": False, "lat": False, "lon": False},
         labels={"weather": "天气现象", "temperature_2m": "温度（℃）", "weathercode": "天气代码"},
-        title="全国32个主要城市当前天气散点地图",
+        title="全国32个主要城市当前天气散点地图-裴航",
     )
     fig.update_geos(
         projection_type="mercator",
@@ -520,7 +520,7 @@ def plot_current_national_map(frame: pd.DataFrame) -> Path:
         showland=True,
         landcolor="#eef6ff",
     )
-    return save_plotly_html(fig, "04_national_current_map.html", "全国32个主要城市当前天气散点地图")
+    return save_plotly_html(fig, "04_national_current_map.html", "全国32个主要城市当前天气散点地图-裴航")
 
 
 def plot_temperature_animation(frame: pd.DataFrame) -> Path:
@@ -535,7 +535,7 @@ def plot_temperature_animation(frame: pd.DataFrame) -> Path:
         hover_name="city",
         hover_data={"temperature_2m": ":.1f", "weather": True, "bubble_size": False, "lat": False, "lon": False},
         labels={"temperature_2m": "温度（℃）", "weather": "天气现象"},
-        title="全国未来24小时温度场变化动画",
+        title="全国未来24小时温度场变化动画-裴航",
         range_color=[frame["temperature_2m"].min(), frame["temperature_2m"].max()],
     )
     fig.update_geos(
@@ -547,7 +547,7 @@ def plot_temperature_animation(frame: pd.DataFrame) -> Path:
         showland=True,
         landcolor="#eef6ff",
     )
-    return save_plotly_html(fig, "05_national_temperature_animation.html", "全国未来24小时温度场变化动画")
+    return save_plotly_html(fig, "05_national_temperature_animation.html", "全国未来24小时温度场变化动画-裴航")
 
 def write_linked_view(frame: pd.DataFrame) -> Path:
     current = frame.sort_values("time").groupby("city", as_index=False).first()
@@ -580,9 +580,7 @@ def write_linked_view(frame: pd.DataFrame) -> Path:
         )
     )
     map_fig.update_layout(
-        title="点击城市查看对应温度曲线",
-        # 👇 缩边距，让地图撑满
-        margin=dict(l=10, r=10, t=50, b=10)
+        title="全国天气地图-温度曲线关联视图-裴航",
     )
     map_fig.update_geos(
         projection_type="mercator",
